@@ -5,3 +5,13 @@
 
     background-color: var(--theme__layer2-color);
 }
+
+.userLinks {
+    color: hsl(from var(--theme__accent-color) h s calc(l + 10));
+    text-decoration: none;
+    transition: color 75ms ease-out;
+}
+
+.userLinks:hover {
+    color: hsl(from var(--theme__accent-color) h s calc(l + 20));
+}
