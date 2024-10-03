@@ -1,0 +1,17 @@
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 25%;
+    gap: 20px;
+    padding: 20px;
+    border-radius: 5px;
+
+    background-color: var(--theme__layer2-color);
+}
+
+.errorMessage {
+    color: red;
+    margin: 0px;
+}

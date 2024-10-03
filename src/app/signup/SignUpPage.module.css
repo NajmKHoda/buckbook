@@ -1,0 +1,61 @@
+/* General sign-up form items */
+
+.tabUnselected {
+    flex-grow: 1;
+    padding: 5px;
+    border-radius: 10px 10px 0px 0px;
+    font-size: 1.25em;
+    text-align: center;
+
+    --button-color: var(--theme__layer1-color);
+}
+
+.tabSelected {
+    flex-grow: 1;
+    padding: 5px;
+    border-radius: 10px 10px 0px 0px;
+    font-size: 1.25em;
+    text-align: center;
+
+    background-color: var(--theme__layer2-color);
+}
+
+.container {
+    width: 40%;
+}
+
+.tabSection {
+    display: flex;
+    margin: 0px;
+    padding: 0px;
+    gap: 5px;
+}
+
+.formSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin: 0px;
+    padding: 20px;
+    border-radius: 0px 0px 10px 10px;
+
+    background-color: var(--theme__layer2-color);
+}
+
+.formSubsectionHeader {
+    margin: 0;
+}
+
+/* Business sign-up form */
+
+.hoursContainer {
+    border-radius: 10px;
+    padding: 10px 20px;
+    background-color: var(--theme__layer1-color);
+}
+
+.hoursDay {
+    text-align: right;
+    vertical-align: middle;
+}

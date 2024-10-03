@@ -1,0 +1,22 @@
+.card {
+    composes: card from '../card.module.css'
+}
+
+.dialogTitle {
+    margin: 0px;
+    text-align: center;
+}
+
+.infoTable {
+    margin: 10px 0px 10px 0px;
+}
+
+.dialogOptionContainer {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.deleteButton {
+    --button-color: #800000;
+}

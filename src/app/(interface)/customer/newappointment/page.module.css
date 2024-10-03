@@ -1,0 +1,46 @@
+.searchContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 10px;
+
+    background-color: var(--theme__layer2-color);
+}
+
+.searchBar {
+    display: flex;
+    gap: 10px;
+}
+
+.businessList {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 0px;
+    padding: 0px;
+    border-radius: 10px;
+
+    overflow: hidden;
+    list-style-type: none;
+}
+
+.listEntry {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    font-size: 1.5em;
+    text-decoration: none;
+    background-color: var(--theme__layer2-color);
+    transition: background-color 75ms ease-out;
+}
+
+.listEntry:is(:hover, :focus) {
+    background-color: hsl(from var(--theme__layer2-color) h s calc(l + 10));
+}
+
+.listEntry:active {
+    background-color: hsl(from var(--theme__layer2-color) h s calc(l - 5));
+}

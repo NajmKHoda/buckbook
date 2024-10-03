@@ -1,0 +1,160 @@
+:root {
+    /* App-wide themes */
+    --theme__background-color: #121212;
+    --theme__layer1-color: #202020;
+    --theme__layer2-color: #303030;
+    --theme__primary-color: #cccccc;
+    --theme__text-field-background-color: #404040;
+    --theme__text-field-background-color__focus: #606060;
+    --theme__input-background-color__disabled: #101010;
+    --theme__accent-color: #9c3e9c;
+}
+
+* {
+    font-family: 'Wix Madefor Display', sans-serif;
+    color: var(--theme__primary-color);
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+    background-color: var(--theme__background-color);
+}
+
+main {
+    padding: 10px 20px;
+}
+
+/* Utility classes */
+.flex-center {
+    display: flex;
+    justify-content: center;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.no-margin {
+    margin: 0px;
+    padding: 0px;
+}
+
+a.no-underline {
+    text-decoration: none;
+}
+
+/* Buttons */
+button {
+    border-radius: 0.75em;
+    margin: 0px;
+    padding: 0.5em 0.75em;
+    font-size: 1em;
+    border: none;
+
+    --button-color: var(--theme__accent-color);
+    background-color: var(--button-color);
+    transition: background-color 75ms ease-out;
+}
+
+button:disabled {
+    background-color: var(--theme__input-background-color__disabled);
+    color: hsl(from var(--theme__primary-color) h s calc(l * 0.375));
+}
+
+button:is(:hover, :focus):where(:enabled) {
+    background-color: hsl(from var(--button-color) h s calc(l + 10));
+}
+
+button:active:where(:enabled) {
+    background-color: hsl(from var(--button-color) h s calc(l - 5));
+}
+
+/* Text fields */
+
+input {
+    font-size: 1em;
+    border-radius: 3px 3px 0px 0px;
+    border-width: 0px 0px 2px 0px;
+    padding: 5px 2px 1px 2px;
+
+    background-color: var(--theme__text-field-background-color);
+    transition: all 100ms ease-out;
+}
+
+input:focus {
+    outline: none;
+    border-bottom-width: 3px;
+
+    background-color: var(--theme__text-field-background-color__focus);
+    border-color: var(--theme__accent-color);
+}
+
+input:read-only {
+    color: hsl(from var(--theme__primary-color) h s calc(l - 25));
+    background-color: var(--theme__input-background-color__disabled);
+}
+
+input.invalid {
+    border-color: #ff0000;
+}
+
+/* Dialog elements */
+dialog {
+    background-color: var(--theme__layer1-color);
+    border: none;
+    border-radius: 10px;
+    padding: 20px;
+
+    opacity: 100%;
+    box-shadow: 0px 0px 10px black;
+
+    animation: 250ms ease-out forwards dialog-show;
+}
+
+@keyframes dialog-show {
+    from {
+        opacity: 0%;
+        transform: translateY(-50px);
+    }
+
+    to {
+        opacity: 100%;
+        transform: translateY(0px);
+    }
+}
+
+dialog::backdrop {
+    background-color: #000000;
+    animation: 250ms ease-out forwards backdrop-show;
+}
+
+@keyframes backdrop-show {
+    from {
+        opacity: 0%;
+    }
+
+    to {
+        opacity: 50%;
+    }
+}
+
+/* Table elements */
+table {
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+td, th {
+    padding: 10px;
+    text-align: start;
+    border: 2px solid black;
+}
+
+tr:nth-child(odd) {
+    background-color: var(--theme__layer2-color);
+}
+
+tr:nth-child(even) {
+    background-color: var(--theme__layer1-color);
+}

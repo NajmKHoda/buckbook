@@ -1,0 +1,59 @@
+.calendarHead {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 0px 10px 0px;
+}
+
+.calendarMonth {
+    text-align: center;
+    font-size: 1.5em;
+    margin: 0px;
+}
+
+.calendarNav {
+    font-size: 1.5em;
+    padding: 0px 10px;
+    border-radius: 5px;
+    --button-color: var(--theme__layer2-color);
+}
+
+.calendarGrid {
+    display: grid;
+    grid-template: repeat(7, 1fr) / repeat(7, 1fr);
+    border-radius: 10px;
+    padding: 10px;
+    overflow: hidden;
+
+    background-color: var(--theme__layer2-color);
+}
+
+.weekDay {
+    text-align: center;
+    padding: 10px 0px;
+    margin: 0px;
+    border-bottom: 2px solid black;
+    background-color: var(--theme__layer2-color);
+}
+
+.outDay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--theme__layer1-color);
+    color: hsl(from var(--theme__primary-color) h s calc(l * 0.375));
+}
+
+.inDay {
+    text-align: center;
+    border-radius: 0px;
+    --button-color: var(--theme__layer2-color);
+}
+
+.emptyDay {
+    background-color: var(--theme__layer2-color);
+}
+
+.selectedDay {
+    border-radius: 0px;
+    --button-color: var(--theme__accent-color);
+}

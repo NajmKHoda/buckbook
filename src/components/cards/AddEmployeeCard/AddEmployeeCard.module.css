@@ -1,0 +1,14 @@
+.container {
+    composes: addCard from '../card.module.css';
+}
+
+.addEmployeeForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.dialog {
+    width: 33%;
+}

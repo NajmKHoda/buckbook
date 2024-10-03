@@ -1,0 +1,19 @@
+.container {
+    composes: card from '../card.module.css'
+}
+
+.dialog[open] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.dialogButtonContainer {
+    display: flex;
+    gap: 10px;
+}
+
+.removeEmployeeButton {
+    --button-color: #800000;
+}
