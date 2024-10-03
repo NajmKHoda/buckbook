@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 import { JWTPayload, jwtVerify, SignJWT } from 'jose';
-import { ObjectId } from 'mongoose';
+import { ObjectIdType } from '@/lib/database/types';
 import getEnv from './environment';
 import { Session, SessionObject } from '@/lib/database/models/session';
 import { AccountType } from '@/lib/database/models/user';
@@ -22,7 +22,7 @@ const sessionDurationMs = Number(getEnv('SESSION_DURATION')) * 1000;
  * @param accountId The account ID associated with this session.
  * @param accountType The account type associated with this session.
  */
-export async function createSession(accountId: ObjectId, accountType: AccountType) {
+export async function createSession(accountId: ObjectIdType, accountType: AccountType) {
     try {
         await connectToDatabase();
         const session = await Session.create({

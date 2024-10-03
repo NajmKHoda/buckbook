@@ -44,7 +44,7 @@ export default function SignUpPage() {
     return (
         <section>
             <h1 className='text-center'>Sign Up</h1>
-            <h2 className='text-center'>I'm signing up as a(n)...</h2>
+            <h2 className='text-center'>I&apos;m signing up as a(n)...</h2>
             <div className='flex-center'>
                 <div className={styles.container}>
                     <div className={styles.tabSection}>

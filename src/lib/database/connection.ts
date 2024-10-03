@@ -1,6 +1,6 @@
 import { connect, connection } from 'mongoose';
 
-export default async function() {
+export default async function connectToDatabase() {
     // Return immediately if we're already connected to Mongoose
     if (connection.readyState === 1) return;
 

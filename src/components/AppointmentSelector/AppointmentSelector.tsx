@@ -94,7 +94,7 @@ export default function AppointmentSelector({ bookedTimes, hours, appointmentDur
         }
 
         return times;
-    }, [bookedTimes, hours, selectedDate])
+    }, [bookedTimes, hours, selectedDate, appointmentDuration])
 
     function handleSubmission() {
         const hours = Number(selectedTime!.slice(0, 2));

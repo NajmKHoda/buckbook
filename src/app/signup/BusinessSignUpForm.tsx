@@ -25,7 +25,7 @@ export default function BusinessSignUpForm() {
             <h3 className={styles.formSubsectionHeader}>Hours</h3>
             <table className={styles.hoursContainer}>
                 {days.map((day, index) => (
-                    <tr>
+                    <tr key={index}>
                         <th className={styles.hoursDay}>{day}: </th>
                         <td><TimeRangeInput index={index} /></td>
                     </tr>
