@@ -11,8 +11,9 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "jose": "^5.7.0",
+    "material-symbols": "^0.24.0",
     "mongoose": "^8.5.4",
-    "next": "14.2.6",
+    "next": "14.2.14",
     "react": "^18",
     "react-dom": "^18",
     "server-only": "^0.0.1",

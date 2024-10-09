@@ -1,21 +1,22 @@
-import Header from '@/components/Header/Header';
 import './global.css';
-
+import 'material-symbols/outlined.css';
 import { Metadata } from "next/types"
 import { PropsWithChildren } from 'react';
+import { Wix_Madefor_Display } from 'next/font/google'
 
 export const metadata: Metadata = {
     title: 'Barber Appointments'
 }
 
+const wixMadeforDisplay = Wix_Madefor_Display({
+    subsets: ['latin'],
+    display: 'swap',
+    variable: '--wix-madefor-display'
+});
+
 export default async function RootLayout({ children }: PropsWithChildren) {
     return (
-        <html lang='en'>
-            <head>
-                <link rel="preconnect" href="https://fonts.googleapis.com" />
-                <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin='anonymous' />
-                <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display&display=swap" rel="stylesheet" />
-            </head>
+        <html lang='en' className={wixMadeforDisplay.variable}>
             <body>
                 {children}
             </body>

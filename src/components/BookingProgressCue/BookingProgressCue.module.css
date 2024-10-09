@@ -1,0 +1,48 @@
+.container {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    width: 75%;
+    min-width: min-content;
+
+    background-color: var(--theme__layer1-color);
+}
+
+.stepContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1 0 0px;
+}
+
+.incompleteStepIcon {
+    font-size: 75px;
+    color: hsl(from var(--theme__primary-color) h s calc(l - 30));
+}
+
+.incompleteStepCaption {
+    color: hsl(from var(--theme__primary-color) h s calc(l - 30));
+    white-space: nowrap;
+}
+
+.currentStepIcon {
+    font-size: 75px;
+    color: var(--theme__accent-color);
+}
+
+.currentStepCaption {
+    color: var(--theme__accent-color);
+    white-space: nowrap;
+}
+
+.completeStepIcon {
+    font-size: 75px;
+    --fill: 1;
+}
+
+.completeStepCaption {
+    white-space: nowrap;
+}
