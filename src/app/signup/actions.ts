@@ -88,7 +88,7 @@ const businessFormat = {
 export async function handleBusinessSignUp(formData: FormData) {
     const rawData = objectFromFormData(formData, businessFormat);
     const parseResult = businessSchema.safeParse(rawData);
-    if (!parseResult.success) return false;
+    if (!parseResult.success) return;
 
     const {
         name,
