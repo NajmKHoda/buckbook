@@ -4,7 +4,7 @@ import { useFormState } from 'react-dom';
 import styles from './LoginPage.module.css';
 import { handleLogin} from './actions';
 import { FormItem } from '@/components/input/FormItem/FormItem';
-import SubmitButton from '@/components/input/SubmitButton';
+import SubmitButton from '@/components/input/SubmitButton/SubmitButton';
 
 export default function LoginPage() {
     const [status, formAction] = useFormState(handleLogin, 'initial');

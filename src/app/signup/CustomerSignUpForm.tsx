@@ -3,7 +3,7 @@
 import { FormItem } from "@/components/input/FormItem/FormItem";
 import { handleCustomerSignUp } from "./actions";
 import styles from './SignUpPage.module.css';
-import SubmitButton from "@/components/input/SubmitButton";
+import SubmitButton from "@/components/input/SubmitButton/SubmitButton";
 
 function validateUsername(username: string) {
     if (!/^\w*$/.test(username)) {

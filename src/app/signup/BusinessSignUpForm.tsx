@@ -2,7 +2,7 @@
 
 import { FormItem } from "@/components/input/FormItem/FormItem";
 import styles from './SignUpPage.module.css';
-import SubmitButton from "@/components/input/SubmitButton";
+import SubmitButton from "@/components/input/SubmitButton/SubmitButton";
 import { TimeRangeInput } from "@/components/input/TimeRangeInput/TimeRangeInput";
 import { handleBusinessSignUp } from "./actions";
 
