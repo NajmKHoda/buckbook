@@ -1,46 +1,66 @@
-.searchContainer {
+/* Search form */
+
+.searchForm {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 10px;
+    font-size: 1.25em;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 10px 10px 0px 0px;
+    margin-top: 10px;
 
     background-color: var(--theme__layer2-color);
 }
 
-.searchBar {
+.searchInput {
     display: flex;
-    gap: 10px;
+    align-items: stretch;
+    margin-left: 5px;
 }
 
-.businessList {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    margin: 0px;
-    padding: 0px;
-    border-radius: 10px;
-
-    overflow: hidden;
-    list-style-type: none;
+.searchField {
+    border-top-right-radius: 0px;
 }
 
-.listEntry {
+.searchButton {
+    padding: 5px;
+    border-radius: 0px 5px 5px 0px;
+}
+
+.searchIcon {
     display: block;
-    width: 100%;
-    height: 100%;
+}
+
+/* Search results */
+.searchResultsContainer {
     padding: 10px;
-    font-size: 1.5em;
-    text-decoration: none;
-    background-color: var(--theme__layer2-color);
-    transition: background-color 75ms ease-out;
+    border-radius: 0px 0px 10px 10px;
+
+    background-color: var(--theme__layer1-color);
 }
 
-.listEntry:is(:hover, :focus) {
-    background-color: hsl(from var(--theme__layer2-color) h s calc(l + 10));
+.searchResultsPlaceholder {
+    margin: 0px;
+    font-style: italic;
+    text-align: center;
+    font-size: 1.1em;
+    
+    color: hsl(from var(--theme__primary-color) h s calc(l - 25));
 }
 
-.listEntry:active {
-    background-color: hsl(from var(--theme__layer2-color) h s calc(l - 5));
+.businessesContainer {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    place-items: stretch;
+    gap: 10px;
+    width: 100%;
+}
+
+.businessIcon {
+    --optical-size: 100;
+    margin: -5px;
+}
+
+.businessLabel {
+    font-size: 1.25em;
+    margin: 0px;
 }

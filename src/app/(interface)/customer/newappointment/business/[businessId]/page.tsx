@@ -1,11 +1,10 @@
 import { Business, BusinessObject } from "@/lib/database/models/business";
 import { Employee, EmployeeObject } from "@/lib/database/models/employee";
 import { isObjectIdOrHexString } from "mongoose"
-import Image from "next/image";
 import { redirect } from "next/navigation"
-import accountIcon from '@/../public/account_pfp.png'
 import styles from './page.module.css';
-import Link from "next/link";
+import Card from "@/components/cards/Card";
+import Icon from '@/components/Icon';
 
 interface Props {
     params: { businessId: string }
@@ -31,14 +30,10 @@ export default async function BusinessAppointmentPage({ params }: Props) {
             <ul className={styles.employeeList}>
                 {employees.map(employee => 
                     <li key={employee._id.toString()}>
-                        <Link className={styles.employeeEntry} href={`../employee/${employee._id}`}>
-                            <Image
-                                src={accountIcon}
-                                width={80}
-                                height={80}
-                                alt={`Picture of ${employee.name}`} />
+                        <Card href={`../employee/${employee._id.toString()}`}>
+                            <Icon name='account_circle' className={styles.employeeIcon} />
                             <p className='no-margin'>{employee.name}</p>
-                        </Link>
+                        </Card>
                     </li>
                 )}
             </ul>

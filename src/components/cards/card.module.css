@@ -2,13 +2,18 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
     padding: 10px;
-    gap: 10px;
+    gap: 5px;
     border-radius: 10px;
 
     box-shadow: 0px 0px 10px black;
-    --button-color: var(--theme__layer2-color)
+    --button-color: var(--theme__layer2-color);
+    transition: transform 75ms ease-out;
+}
+
+.card:hover {
+    transform: scale(105%);
 }
 
 .addCard {

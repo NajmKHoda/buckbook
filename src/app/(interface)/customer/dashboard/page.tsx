@@ -1,16 +1,16 @@
 import styles from './page.module.css'
-import { Appointment, AppointmentObject } from '@/lib/database/models/appointment';
+import { Appointment } from '@/lib/database/models/appointment';
 import AppointmentCard from '@/components/cards/AppointmentCard/AppointmentCard'
-import AddAppointmentCard from '@/components/cards/AddAppointmentCard/AddAppointmentCard';
 import { getAccount } from '@/lib/session';
 import { redirect } from 'next/navigation';
 import { AccountType } from '@/lib/database/models/user';
+import Card from "@/components/cards/Card";
+import Icon from "@/components/Icon";
 
 export default async function CustomerDashboard() {
     const customer = await getAccount(AccountType.Customer);
     if (!customer) redirect('/login');
 
-    // Fuck it, the typing for this shit is too much
     const appointments: any = await Appointment
         .find({ customer: customer._id })
         .select('date employee')
@@ -33,7 +33,10 @@ export default async function CustomerDashboard() {
                         employeeName={appointment.employee.name}
                         appointmentId={appointment._id.toString()}/>
                 )}
-                <AddAppointmentCard />
+                <Card addStyle href='/customer/newappointment'>
+                    <Icon name='add' className={styles.addIcon} />
+                    <h3 className='no-margin text-center'>New Appointment</h3>
+                </Card>
             </div>
         </section>
     )

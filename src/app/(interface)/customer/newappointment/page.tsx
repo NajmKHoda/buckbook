@@ -3,34 +3,39 @@
 import { useFormState } from "react-dom";
 import { handleBusinessSearch } from "./actions";
 import styles from './page.module.css';
-import Link from "next/link";
+import SubmitButton from "@/components/input/SubmitButton/SubmitButton";
+import Icon from "@/components/Icon";
+import Card from '@/components/cards/Card';
 
 export default function NewAppointmentPage() {
     const [businesses, formAction] = useFormState(handleBusinessSearch, [])
 
     return (
-        <>
-            <section className='flex-center'>
-                <div className={styles.searchContainer}>
-                    <label htmlFor='business-field'>Search for a business:</label>
-                    <form className={styles.searchBar} action={formAction}>
-                        <input type='text' name='search' id='business-field' required/>
-                        <button type='submit'>Search</button>
-                    </form>
+        <section>
+            <h2 className='text-center'>Search for a business.</h2>
+            <form action={formAction} className={styles.searchForm}>
+                <label htmlFor='search-field'>Search by name:</label>
+                <div className={styles.searchInput}>
+                    <input id='search-field' name='search' className={styles.searchField} />
+                    <SubmitButton className={styles.searchButton}>
+                        <Icon className={styles.searchIcon} name='search' />
+                    </SubmitButton>
                 </div>
-            </section>
-            <section>
-                <h1>Search Results ({businesses.length})</h1>
-                <ul className={styles.businessList}>
-                    {businesses.map(business => (
-                        <li key={business.id}>
-                            <Link href={`newappointment/business/${business.id}`} className={styles.listEntry}>
-                                {business.name}
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
-            </section>
-        </>
+            </form>
+            <div className={styles.searchResultsContainer}>
+                {businesses.length == 0 ? 
+                    <p className={styles.searchResultsPlaceholder}>Start searching to see results here.</p>
+                    :
+                    <div className={styles.businessesContainer}>
+                        {businesses.map(business => (
+                            <Card key={business.id} href={`./newappointment/business/${business.id}`}>
+                                <Icon className={styles.businessIcon} name='apartment' />
+                                <p className={styles.businessLabel}>{business.name}</p>
+                            </Card>
+                        ))}
+                    </div>
+                }
+            </div>
+        </section>
     )
 }

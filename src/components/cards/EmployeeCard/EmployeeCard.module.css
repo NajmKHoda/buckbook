@@ -1,7 +1,3 @@
-.container {
-    composes: card from '../card.module.css'
-}
-
 .dialog[open] {
     display: flex;
     flex-direction: column;
@@ -16,4 +12,15 @@
 
 .removeEmployeeButton {
     --button-color: #800000;
+}
+
+.employeeIcon {
+    --optical-size: 100;
+    --fill: 1;
+    margin: -10px;
+}
+
+.label {
+    margin: 0px;
+    font-size: 1.25em;
 }

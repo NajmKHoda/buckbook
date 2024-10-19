@@ -1,5 +1,17 @@
 .appointmentsContainer {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
+    place-items: stretch;
     gap: 15px;
+}
+
+.addIcon {
+    --optical-size: 100;
+    margin: -10px;
+}
+
+.label {
+    margin: 0px;
+    font-size: 1.25em;
+    font-weight: bold;
 }

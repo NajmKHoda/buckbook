@@ -1,7 +1,3 @@
-.container {
-    composes: addCard from '../card.module.css';
-}
-
 .addEmployeeForm {
     display: flex;
     flex-direction: column;
@@ -11,4 +7,15 @@
 
 .dialog {
     width: 33%;
+}
+
+.addIcon {
+    --optical-size: 100;
+    margin: -10px;
+}
+
+.label {
+    margin: 0px;
+    font-size: 1.25em;
+    font-weight: bold;
 }

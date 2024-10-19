@@ -4,5 +4,5 @@ interface Props {
 }
 
 export default function Icon({ className = '', name }: Props) {
-    return <span className={`material-symbols-outlined ${className}`}>{name}</span>
+    return <span className={`material-symbols-outlined override ${className}`}>{name}</span>
 }

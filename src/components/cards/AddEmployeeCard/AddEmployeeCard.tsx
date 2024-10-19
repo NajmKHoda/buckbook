@@ -1,13 +1,13 @@
 'use client';
 
-import Image from 'next/image'
 import { useRef } from 'react'
 import styles from './AddEmployeeCard.module.css'
-import addIcon from '@/../public/add_icon.png'
 import { FormItem } from '@/components/input/FormItem/FormItem';
 import SubmitButton from '@/components/input/SubmitButton/SubmitButton';
 import { handleEmployeeCreation } from './actions';
 import { useRouter } from 'next/navigation'
+import Card from '../Card';
+import Icon from '@/components/Icon';
 
 interface AddEmployeeCardProps {
     businessId: string
@@ -27,17 +27,13 @@ export default function AddEmployeeCard({ businessId }: AddEmployeeCardProps) {
 
     return (
         <>
-            <button onClick={() => dialog.current!.showModal()} className={styles.container}>
-                <Image
-                    src={addIcon}
-                    width={80}
-                    height={80}
-                    alt='Profile picture' />
-                <h2 className='no-margin text-center'>Add Employee</h2>
-            </button>
+        <Card addStyle onClick={() => dialog.current!.showModal()} >
+            <Icon name='add' className={styles.addIcon} />
+            <p className={styles.label}>Add Employee</p>
+        </Card>
 
-            <dialog ref={dialog} className={styles.dialog}>
-                <form action={handleFormSubmission} ref={form} className={styles.addEmployeeForm}>
+        <dialog ref={dialog} className={styles.dialog}>
+            <form action={handleFormSubmission} ref={form} className={styles.addEmployeeForm}>
                     <h3 className='no-margin'>Employee Information</h3>
                     <FormItem name='Name' />
                     <FormItem name='Bio' />
@@ -49,8 +45,8 @@ export default function AddEmployeeCard({ businessId }: AddEmployeeCardProps) {
                     <FormItem name='Password' type='password' />
 
                     <SubmitButton>Add Employee</SubmitButton>
-                </form>
-            </dialog>
+            </form>
+        </dialog>
         </>
     )
 }

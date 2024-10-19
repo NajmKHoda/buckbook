@@ -17,11 +17,17 @@
 
 .material-symbols-outlined {
     --fill: 0;
+    --optical-size: 24;
     font-variation-settings:
         'FILL' var(--fill),
         'wght' 400,
         'GRAD' 0,
-        'opsz' 48;
+        'opsz' var(--optical-size);
+}
+
+.material-symbols-outlined.override {
+    vertical-align: middle;
+    font-size: calc(var(--optical-size) * 1px);  
 }
 
 body {
@@ -49,12 +55,23 @@ main {
     padding: 0px;
 }
 
-a.no-underline {
+a {
     text-decoration: none;
+    color: hsl(from var(--theme__accent-color) h s calc(l + 5));
+    transition: color 75ms ease-out;
+
+}
+
+a:hover {
+    color: hsl(from var(--theme__accent-color) h s calc(l + 15));
+}
+
+a:active {
+    color: hsl(from var(--theme__accent-color) h s calc(l - 5));
 }
 
 /* Buttons */
-button {
+button, .button {
     border-radius: 0.75em;
     margin: 0px;
     padding: 0.5em 0.75em;
@@ -71,11 +88,11 @@ button:disabled {
     color: hsl(from var(--theme__primary-color) h s calc(l * 0.375));
 }
 
-button:is(:hover, :focus):where(:enabled) {
+button:is(:hover, :focus):where(:enabled), .button:is(:hover, :focus) {
     background-color: hsl(from var(--button-color) h s calc(l + 10));
 }
 
-button:active:where(:enabled) {
+button:active:where(:enabled), .button:active {
     background-color: hsl(from var(--button-color) h s calc(l - 5));
 }
 

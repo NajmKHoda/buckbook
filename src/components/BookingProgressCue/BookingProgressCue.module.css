@@ -19,7 +19,7 @@
 }
 
 .incompleteStepIcon {
-    font-size: 75px;
+    --optical-size: 75;
     color: hsl(from var(--theme__primary-color) h s calc(l - 30));
 }
 
@@ -29,7 +29,7 @@
 }
 
 .currentStepIcon {
-    font-size: 75px;
+    --optical-size: 75;
     color: var(--theme__accent-color);
 }
 
@@ -39,7 +39,7 @@
 }
 
 .completeStepIcon {
-    font-size: 75px;
+    --optical-size: 75;
     --fill: 1;
 }
 

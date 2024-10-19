@@ -5,10 +5,14 @@ import { useFormStatus } from "react-dom";
 import Icon from "@/components/Icon";
 import styles from './SubmitButton.module.css';
 
-export default function SubmitButton({ children }: PropsWithChildren) {
+interface Props extends PropsWithChildren {
+    className?: string;
+}
+
+export default function SubmitButton({ className = '', children }: Props) {
     const { pending } = useFormStatus();
     return (
-        <button disabled={pending}>
+        <button className={className} disabled={pending}>
             { pending ? <Icon className={styles.spinningIcon} name='progress_activity' /> : children }
         </button>
     );

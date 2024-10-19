@@ -27,7 +27,7 @@ export default class CalendarDate {
     }
 
     static now() {
-        return new CalendarDate(new Date());
+        return new CalendarDate(Date.now());
     }
 
     equals(date: CalendarDate | Date) {

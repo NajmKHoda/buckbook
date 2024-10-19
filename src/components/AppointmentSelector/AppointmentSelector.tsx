@@ -2,17 +2,10 @@
 
 import { Hours } from "@/lib/database/models/business";
 import { useMemo, useState } from "react";
+import { useRouter, useParams } from "next/navigation";
 import Calendar from './Calendar/Calendar';
 import CalendarDate from "./CalendarDate";
 import styles from './AppointmentSelector.module.css';
-import { useParams } from "next/navigation";
-import { handleAppointmentBooking } from "./actions";
-
-interface Props {
-    bookedTimes: string[],
-    hours: Hours[],
-    appointmentDuration: number
-}
 
 function timeToMinutes(timeString: string) {
     const hours = Number(timeString.slice(0, 2));
@@ -36,10 +29,17 @@ function datetimeToString(date: CalendarDate, time: string) {
     return dateObj.toLocaleString('en-US', { dateStyle: 'long', timeStyle: 'short'});
 }
 
+interface Props {
+    bookedTimes: string[],
+    hours: Hours[],
+    appointmentDuration: number
+}
+
 export default function AppointmentSelector({ bookedTimes, hours, appointmentDuration }: Props) {
+    const router = useRouter();
+    const { employeeId } = useParams();
     const [selectedDate, setSelectedDate] = useState(CalendarDate.now());
     const [selectedTime, setSelectedTime] = useState<string>();
-    const params = useParams<{employeeId: string}>();
 
     const unavailableDates = useMemo(() => {
         const appointmentCounts: Record<string, [weekDay: number, count: number]> = {}
@@ -100,7 +100,8 @@ export default function AppointmentSelector({ bookedTimes, hours, appointmentDur
         const hours = Number(selectedTime!.slice(0, 2));
         const minutes = Number(selectedTime!.slice(3, 5));
         const date = new Date(selectedDate.year, selectedDate.month, selectedDate.day, hours, minutes);
-        handleAppointmentBooking(date.toISOString(), params.employeeId);
+        
+        router.push(`../confirm/?employeeId=${employeeId}&datetime=${date.toISOString()}`);
     }
 
     return (
@@ -131,7 +132,7 @@ export default function AppointmentSelector({ bookedTimes, hours, appointmentDur
                         datetimeToString(selectedDate, selectedTime) :
                         'Please select a time.'}
                 </p>
-                <button type='button' onClick={handleSubmission} disabled={!selectedTime}>Book Appointment</button>
+                <button type='button' onClick={handleSubmission} disabled={!selectedTime}>Next</button>
             </div>
         </div>
     )

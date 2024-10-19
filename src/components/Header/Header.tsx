@@ -5,9 +5,9 @@ import Link from 'next/link';
 export default async function Header() {
     const name = (await getAccount())?.name ?? 
         <>
-            <Link className={styles.userLinks} href='/login'>Log in</Link>
+            <Link href='/login'>Log in</Link>
             <> or </>
-            <Link className={styles.userLinks} href='/signup'>Sign up</Link>
+            <Link href='/signup'>Sign up</Link>
         </>;
 
     return (

@@ -2,11 +2,11 @@
 
 import { EmployeeObject } from "@/lib/database/models/employee";
 import styles from './EmployeeCard.module.css'
-import profilePicture from '@/../public/account_pfp.png'
-import Image from "next/image";
 import { useRef } from 'react';
 import { handleEmployeeDeletion } from "./actions";
 import { useRouter } from "next/navigation";
+import Card from '../Card';
+import Icon from '@/components/Icon';
 
 interface EmployeeCardProps {
     employeeJSON: string
@@ -25,14 +25,10 @@ export default function EmployeeCard({ employeeJSON }: EmployeeCardProps) {
 
     return (
         <>
-            <button onClick={() => dialog.current!.showModal()} className={styles.container}>
-                <Image
-                    src={profilePicture}
-                    width={80}
-                    height={80}
-                    alt='Profile picture' />
-                <h2 className='no-margin text-center'>{employee.name}</h2>
-            </button>
+            <Card onClick={() => dialog.current!.showModal()} >
+                <Icon name='account_circle' className={styles.employeeIcon} />
+                <p className={styles.label}>{employee.name}</p>
+            </Card>
 
             <dialog className={styles.dialog} ref={dialog}>
                 <h2 className='no-margin'>{employee.name}</h2>

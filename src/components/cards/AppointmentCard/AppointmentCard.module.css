@@ -1,5 +1,11 @@
-.card {
-    composes: card from '../card.module.css'
+.businessName {
+    margin: 0px;
+    font-size: 1.25em;
+    font-weight: bold;
+}
+
+.summaryDetails {
+    margin: 0px;
 }
 
 .dialogTitle {

@@ -19,6 +19,8 @@ export default function BookingProgressCue() {
         stage = 1;
     } else if (pathname.includes('employee')) {
         stage = 2;
+    } else if (pathname.includes('confirm')) {
+        stage = 3;
     }
 
     return (

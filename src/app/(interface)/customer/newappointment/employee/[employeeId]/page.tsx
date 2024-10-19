@@ -9,6 +9,7 @@ import { redirect } from "next/navigation"
 interface Props {
     params: { employeeId: string }
 }
+
 export default async function AppointmentEmployeePage({ params }: Props) {
     if (!isObjectIdOrHexString(params.employeeId)) redirect('/customer/newappointment');
 
@@ -31,7 +32,7 @@ export default async function AppointmentEmployeePage({ params }: Props) {
 
     return (
         <>
-            <h2 className='text-center'>Select an appointment time.</h2>
+            <h2 className='text-center'>Select an appointment date and time.</h2>
             <AppointmentSelector hours={hours} appointmentDuration={appointmentDuration} bookedTimes={times} />
         </>
     )
