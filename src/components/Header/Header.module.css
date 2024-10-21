@@ -1,7 +1,18 @@
 .container {
     display: flex;
     justify-content: space-between;
-    padding: 15px 20px;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    gap: 20px;
+    padding: 15px 20px;          
 
     background-color: var(--theme__layer2-color);
+}
+
+.name {
+    font-size: 2em;
+    margin: 0px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

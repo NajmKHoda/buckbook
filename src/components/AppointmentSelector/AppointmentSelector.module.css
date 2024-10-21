@@ -1,8 +1,7 @@
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
+@media screen and (width <= 580px) {
+    .controlContainer {
+        flex-direction: column;
+    }
 }
 
 .controlContainer {
@@ -32,17 +31,20 @@
     height: min-content;
 }
 
-.unselectedTime {
+.timeDiv {
     width: 100%;
     height: 100%;
     padding: 5px;
+    white-space: nowrap;
+}
+
+.unselectedTime {
+    composes: timeDiv;
     --button-color: var(--theme__layer2-color);
 }
 
 .selectedTime {
-    width: 100%;
-    height: 100%;
-    padding: 5px;
+    composes: timeDiv;
     --button-color: var(--theme__accent-color);
 }
 

@@ -4,6 +4,7 @@
     align-items: center;
 
     width: 25%;
+    min-width: 300px;
     gap: 20px;
     padding: 20px;
     border-radius: 5px;

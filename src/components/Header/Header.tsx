@@ -3,17 +3,12 @@ import { getAccount } from '@/lib/session';
 import Link from 'next/link';
 
 export default async function Header() {
-    const name = (await getAccount())?.name ?? 
-        <>
-            <Link href='/login'>Log in</Link>
-            <> or </>
-            <Link href='/signup'>Sign up</Link>
-        </>;
+    const name = (await getAccount())?.name ?? <Link href='/login'>Log In</Link>;
 
     return (
         <header className={styles.container}>
             <h1 className='no-margin'>BuckBook</h1>
-            <h1 className='no-margin'>{name}</h1>
+            <p className={styles.name}>{name}</p>
         </header>
     )
 }

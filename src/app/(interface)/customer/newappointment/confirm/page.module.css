@@ -5,6 +5,10 @@
     gap: 20px;
 }
 
+.infoHeader {
+    white-space: nowrap;
+}
+
 .infoLabel {
     vertical-align: middle;
 }

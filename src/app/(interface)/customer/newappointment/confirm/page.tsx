@@ -35,28 +35,28 @@ export default async function ConfirmAppointmentPage({ searchParams }: Props) {
                 <table>
                     <tbody>
                         <tr>
-                            <th><Icon name='apartment' /> <span className={styles.infoLabel}>Business</span></th>
+                            <th className={styles.infoHeader}><Icon name='apartment' /> <span className={styles.infoLabel}>Business</span></th>
                             <td>
                                 <>{employee.business.name} </>
                                 <Link href='./'>(Change)</Link>
                             </td>
                         </tr>
                         <tr>
-                            <th><Icon name='person' /> <span className={styles.infoLabel}>Employee</span></th>
+                            <th className={styles.infoHeader}><Icon name='person' /> <span className={styles.infoLabel}>Employee</span></th>
                             <td>
                                 <>{employee.name} </>
                                 <Link href={`business/${employee.business._id}`}>(Change)</Link>
                             </td>
                         </tr>
                         <tr>
-                            <th><Icon name='calendar_month' /> <span className={styles.infoLabel}>Date</span></th>
+                            <th className={styles.infoHeader}><Icon name='calendar_month' /> <span className={styles.infoLabel}>Date</span></th>
                             <td>
                                 <>{date.toLocaleDateString('en-US', { dateStyle: 'full' })} </>
                                 <Link href={`employee/${employee._id}`}>(Change)</Link>
                             </td>
                         </tr>
                         <tr>
-                            <th><Icon name='schedule' /> <span className={styles.infoLabel}>Time</span></th>
+                            <th className={styles.infoHeader}><Icon name='schedule' /> <span className={styles.infoLabel}>Time</span></th>
                             <td>
                                 <>{date.toLocaleTimeString('en-US', { timeStyle: 'short' })} </>
                                 <Link href={`employee/${employee._id}`}>(Change)</Link>

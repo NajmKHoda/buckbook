@@ -5,6 +5,7 @@ import styles from './LoginPage.module.css';
 import { handleLogin} from './actions';
 import { FormItem } from '@/components/input/FormItem/FormItem';
 import SubmitButton from '@/components/input/SubmitButton/SubmitButton';
+import Link from 'next/link';
 
 export default function LoginPage() {
     const [status, formAction] = useFormState(handleLogin, 'initial');
@@ -41,6 +42,7 @@ export default function LoginPage() {
                     <FormItem name='Username' minLength={5} maxLength={20} customValidator={validateUsername} />
                     <FormItem name='Password' type='password' />
                     <SubmitButton>Log In</SubmitButton>
+                    <p className='no-margin'>Don&apos;t have an account? <Link href='/signup'>Sign up.</Link></p>
                 </form>
             </div>
         </section>

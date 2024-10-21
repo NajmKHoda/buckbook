@@ -1,13 +1,21 @@
-.container {
-    display: flex;
-    justify-content: space-evenly;
-    gap: 10px;
-    padding: 10px;
-    border-radius: 10px;
-    width: 75%;
-    min-width: min-content;
+@media screen and (width <= 600px) {
+    .container {
+        display: none;
+    }
+}
 
-    background-color: var(--theme__layer1-color);
+@media screen and (width > 600px) {
+    .container {
+        display: flex;
+        justify-content: space-evenly;
+        gap: 10px;
+        padding: 10px;
+        border-radius: 10px;
+        width: 75%;
+        min-width: min-content;
+
+        background-color: var(--theme__layer1-color);
+    }
 }
 
 .stepContainer {
