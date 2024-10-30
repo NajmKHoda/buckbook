@@ -4,17 +4,15 @@
     font-weight: bold;
 }
 
-.summaryDetails {
-    margin: 0px;
-}
-
-.dialogTitle {
-    margin: 0px;
-    text-align: center;
+.dialog[open] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 }
 
 .infoTable {
-    margin: 10px 0px 10px 0px;
+    margin: 0px 0px 0px 0px;
 }
 
 .dialogOptionContainer {

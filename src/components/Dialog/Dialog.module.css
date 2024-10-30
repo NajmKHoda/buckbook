@@ -1,0 +1,17 @@
+.cancelButton {
+    --button-color: transparent;
+    color: var(--theme__accent-color);
+    padding: 0px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    transition: transform 75ms ease-out;
+}
+
+.cancelButton:hover {
+    transform: scale(120%);
+}
+
+.cancelButton:active {
+    transform: scale(90%);
+}

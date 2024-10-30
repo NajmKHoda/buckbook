@@ -8,6 +8,7 @@ import { handleEmployeeCreation } from './actions';
 import { useRouter } from 'next/navigation'
 import Card from '../Card';
 import Icon from '@/components/Icon';
+import Dialog from '@/components/Dialog/Dialog'
 
 interface AddEmployeeCardProps {
     businessId: string
@@ -27,26 +28,26 @@ export default function AddEmployeeCard({ businessId }: AddEmployeeCardProps) {
 
     return (
         <>
-        <Card addStyle onClick={() => dialog.current!.showModal()} >
-            <Icon name='add' className={styles.addIcon} />
-            <p className={styles.label}>Add Employee</p>
-        </Card>
+            <Card addStyle onClick={() => dialog.current!.showModal()} >
+                <Icon name='add' className={styles.addIcon} />
+                <p className={styles.label}>Add Employee</p>
+            </Card>
 
-        <dialog ref={dialog} className={styles.dialog}>
-            <form action={handleFormSubmission} ref={form} className={styles.addEmployeeForm}>
-                    <h3 className='no-margin'>Employee Information</h3>
-                    <FormItem name='Name' />
-                    <FormItem name='Bio' />
-                    <FormItem name='Email Address' type='email' />
-                    <FormItem name='Phone Number' type='tel' />
+            <Dialog ref={dialog} className={styles.dialog}>
+                <form action={handleFormSubmission} ref={form} className={styles.addEmployeeForm}>
+                        <h3 className='no-margin'>Employee Information</h3>
+                        <FormItem name='Name' />
+                        <FormItem name='Bio' />
+                        <FormItem name='Email Address' type='email' />
+                        <FormItem name='Phone Number' type='tel' />
 
-                    <h3 className='no-margin'>Account Credentials</h3>
-                    <FormItem name='Username' />
-                    <FormItem name='Password' type='password' />
+                        <h3 className='no-margin'>Account Credentials</h3>
+                        <FormItem name='Username' />
+                        <FormItem name='Password' type='password' />
 
-                    <SubmitButton>Add Employee</SubmitButton>
-            </form>
-        </dialog>
+                        <SubmitButton>Add Employee</SubmitButton>
+                </form>
+            </Dialog>
         </>
     )
 }
