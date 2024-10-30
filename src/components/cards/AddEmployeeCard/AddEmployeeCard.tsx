@@ -2,7 +2,7 @@
 
 import { useRef } from 'react'
 import styles from './AddEmployeeCard.module.css'
-import { FormItem } from '@/components/input/FormItem/FormItem';
+import FormItem from '@/components/input/FormItem/FormItem';
 import SubmitButton from '@/components/input/SubmitButton/SubmitButton';
 import { handleEmployeeCreation } from './actions';
 import { useRouter } from 'next/navigation'

@@ -1,9 +1,36 @@
 'use client';
-import { HTMLInputTypeAttribute, useState, ChangeEvent, InvalidEvent, useEffect } from "react";
+
+import { HTMLInputTypeAttribute, useState, ChangeEvent, InvalidEvent } from "react";
 import styles from './FormItem.module.css';
 import { useFormStatus } from "react-dom";
 
-interface FormItemDescription {
+function formatPhone(phone: string) {
+    if (phone.length == 10) {
+        let areaCode = phone.slice(0, 3);
+        let segment2 = phone.slice(3, 6);
+        let segment3 = phone.slice(6, 10);
+
+        return `(${areaCode}) ${segment2}-${segment3}`;
+    }
+
+    if (phone.length == 11) {
+        let countryCode = phone[0];
+        let areaCode = phone.slice(1, 4);
+        let segment2 = phone.slice(4, 7);
+        let segment3 = phone.slice(7, 11);
+
+        return `+${countryCode} (${areaCode}) ${segment2}-${segment3}`;
+    }
+
+    return phone;
+}
+
+interface FormItemStatus {
+    isValid: boolean;
+    invalidationReason?: string;
+}
+
+interface Props {
     name: string;
     type?: HTMLInputTypeAttribute;
     optional?: boolean;
@@ -12,12 +39,9 @@ interface FormItemDescription {
     maxLength?: number;
     customValidator?: (value: string) => string | void;
 }
-interface FormItemStatus {
-    valid: boolean;
-    invalidationReason?: string;
-}
 
-export function FormItem({
+
+export default function FormItem({
     name,
     type,
     optional = false,
@@ -25,29 +49,36 @@ export function FormItem({
     minLength,
     maxLength,
     customValidator
-}: FormItemDescription) {
+}: Props) {
     const [value, setValue] = useState<string>('');
-    const [status, setStatus] = useState<FormItemStatus>({ valid: true });
+    const [status, setStatus] = useState<FormItemStatus>({ isValid: true });
+    const [isFocused, setFocused] = useState(false);
     const { pending } = useFormStatus();
 
     const encodedName = name.toLowerCase().replace(/\s/g, '-');
     const fieldId = `${encodedName}-field`;
 
     function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
-        const value = event.target.value;
+        let value = event.target.value;
+        if (type === 'tel') {
+            // Strip all non-digit characters from the new value.
+            value = value.replace(/\D/g, '');
+        }
+
         if (customValidator) {
             const validity = customValidator(value);
             event.target.setCustomValidity(validity || '');
         }
 
         if (event.target.checkValidity()) {
-            setStatus({ valid: true });
+            setStatus({ isValid: true });
         }
+
         setValue(value);
     }
 
     function handleInvalidation(event: InvalidEvent<HTMLInputElement>) {
-        const nextStatus: FormItemStatus = { valid: false }
+        const nextStatus: FormItemStatus = { isValid: false }
 
         const validity = event.target.validity;
         if (validity.customError) {
@@ -68,23 +99,25 @@ export function FormItem({
 
     return (
         <div className={styles.container}>
-            <label htmlFor={fieldId} className={status.valid ? styles.label : styles.labelInvalid}>{`${name}: `}</label>
+            <label htmlFor={fieldId} className={status.isValid ? styles.label : styles.labelInvalid}>{`${name}: `}</label>
             <input
                 id={fieldId}
-                name={encodedName}
+                name={type === 'tel' ? undefined : encodedName}
                 type={type}
-                value={value}
+                value={type === 'tel' && !isFocused ? formatPhone(value) : value}
                 required={!optional}
                 minLength={minLength}
                 maxLength={maxLength}
                 pattern={pattern}
                 readOnly={pending}
-                className={status.valid ? '' : 'invalid'}
+                className={status.isValid ? undefined : 'invalid'}
                 onChange={handleInputChange}
                 onInvalid={handleInvalidation}
+                onFocus={() => setFocused(true)}
+                onBlur={() => setFocused(false)}
             />
-            {(status.invalidationReason && 
-            <p className={styles.errorMessage}>{status.invalidationReason}</p>)}
+            { type === 'tel' && <input type='hidden' name={encodedName} value={value} /> }
+            { !status.isValid && <p className={styles.errorMessage}>{status.invalidationReason}</p> } 
         </div>
     );
 }

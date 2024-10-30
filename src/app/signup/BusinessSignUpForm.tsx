@@ -1,6 +1,6 @@
 'use client';
 
-import { FormItem } from "@/components/input/FormItem/FormItem";
+import FormItem from "@/components/input/FormItem/FormItem";
 import styles from './SignUpPage.module.css';
 import SubmitButton from "@/components/input/SubmitButton/SubmitButton";
 import { TimeRangeInput } from "@/components/input/TimeRangeInput/TimeRangeInput";

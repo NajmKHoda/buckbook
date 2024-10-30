@@ -20,7 +20,7 @@ const employeeSchema = z.object({
     name: z.string().trim(),
     bio: z.string(),
     email: z.string().includes('@'),
-    phone: z.string().regex(/^\d{3}-\d{3}-\d{4}$/),
+    phone: z.string().regex(/^\d+$/),
     username: z.string().trim().min(5).max(20).regex(/^\w+$/),
     password: z.string()
 })

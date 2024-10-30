@@ -3,7 +3,7 @@
 import { useFormState } from 'react-dom';
 import styles from './LoginPage.module.css';
 import { handleLogin} from './actions';
-import { FormItem } from '@/components/input/FormItem/FormItem';
+import FormItem from '@/components/input/FormItem/FormItem';
 import SubmitButton from '@/components/input/SubmitButton/SubmitButton';
 import Link from 'next/link';
 

@@ -13,7 +13,7 @@ import { arrayFromGenerator, objectFromFormData } from '@/lib/formDataParsing';
 const customerSchema = z.object({
     name: z.string().trim(),
     email: z.string().includes('@'),
-    phone: z.string().regex(/^\d{3}-\d{3}-\d{3}/),
+    phone: z.string().regex(/^\d+$/),
     username: z.string().trim().min(5).max(20).regex(/^\w+$/),
     password: z.string()
 })
@@ -54,7 +54,7 @@ const businessSchema = z.object({
     name: z.string().trim().min(1),
     description: z.string().min(1),
     email: z.string().includes('@'),
-    phone: z.string().regex(/^\d{3}-\d{3}-\d{3}/),
+    phone: z.string().regex(/^\d+$/),
     hours: z.object(
         {
             opening: z.string().regex(/^\d{2}:\d{2}$/).optional(),
