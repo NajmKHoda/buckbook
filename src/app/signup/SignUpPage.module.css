@@ -21,8 +21,9 @@
 }
 
 .container {
-    width: 40%;
+    width: 50%;
     min-width: 350px;
+    max-width: 600px;
 }
 
 .tabSection {
@@ -59,4 +60,11 @@
 .hoursDay {
     text-align: right;
     vertical-align: middle;
+}
+
+.hoursMobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
 }

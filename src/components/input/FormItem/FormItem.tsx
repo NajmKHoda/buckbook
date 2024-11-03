@@ -32,29 +32,36 @@ interface FormItemStatus {
 
 interface Props {
     name: string;
+    units?: string;
     type?: HTMLInputTypeAttribute;
     optional?: boolean;
     pattern?: string;
+    min?: number;
+    max?: number;
     minLength?: number;
     maxLength?: number;
     customValidator?: (value: string) => string | void;
+    inline?: boolean;
 }
 
 
 export default function FormItem({
     name,
+    units,
     type,
     optional = false,
     pattern,
-    minLength,
-    maxLength,
-    customValidator
+    min, max,
+    minLength, maxLength,
+    customValidator,
+    inline = false
 }: Props) {
     const [value, setValue] = useState<string>('');
     const [status, setStatus] = useState<FormItemStatus>({ isValid: true });
     const [isFocused, setFocused] = useState(false);
     const { pending } = useFormStatus();
 
+    const labelText = units ? `${name} (${units}):` : `${name}:`;
     const encodedName = name.toLowerCase().replace(/\s/g, '-');
     const fieldId = `${encodedName}-field`;
 
@@ -98,24 +105,23 @@ export default function FormItem({
     }
 
     return (
-        <div className={styles.container}>
-            <label htmlFor={fieldId} className={status.isValid ? styles.label : styles.labelInvalid}>{`${name}: `}</label>
+        <div className={inline ? styles.containerInline : styles.container}>
+            <label htmlFor={fieldId} className={status.isValid ? styles.label : styles.labelInvalid}>{labelText}</label>
             <input
                 id={fieldId}
                 name={type === 'tel' ? undefined : encodedName}
                 type={type}
                 value={type === 'tel' && !isFocused ? formatPhone(value) : value}
                 required={!optional}
-                minLength={minLength}
-                maxLength={maxLength}
+                min={min} max={max}
+                minLength={minLength} maxLength={maxLength}
                 pattern={pattern}
                 readOnly={pending}
                 className={status.isValid ? undefined : 'invalid'}
                 onChange={handleInputChange}
                 onInvalid={handleInvalidation}
                 onFocus={() => setFocused(true)}
-                onBlur={() => setFocused(false)}
-            />
+                onBlur={() => setFocused(false)} />
             { type === 'tel' && <input type='hidden' name={encodedName} value={value} /> }
             { !status.isValid && <p className={styles.errorMessage}>{status.invalidationReason}</p> } 
         </div>

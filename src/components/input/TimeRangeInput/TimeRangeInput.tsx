@@ -5,9 +5,10 @@ import styles from './TimeRangeInput.module.css';
 
 interface TimeRangeInputProps {
     index: number;
+    compact?: boolean
 }
 
-export function TimeRangeInput({ index }: TimeRangeInputProps) {
+export function TimeRangeInput({ index, compact=false }: TimeRangeInputProps) {
     const [isOpen, setIsOpen] = useState(true);
     const [isInvalid, setIsInvalid] = useState(false);
     const openingInput = useRef<HTMLInputElement>(null);
@@ -41,7 +42,7 @@ export function TimeRangeInput({ index }: TimeRangeInputProps) {
                 <input type='checkbox' checked={isOpen} onChange={handleToggle} />
                 {isOpen ? 
                 <>
-                    <> Open from </>
+                    {!compact && <> Open from </>}
                     <input
                         name={`opening${index}`}
                         title='Opening time'
