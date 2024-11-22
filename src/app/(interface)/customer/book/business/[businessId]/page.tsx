@@ -11,13 +11,13 @@ interface Props {
 }
 
 export default async function BusinessAppointmentPage({ params }: Props) {
-    if (!isObjectIdOrHexString(params.businessId)) redirect('/customer/newappointment');
+    if (!isObjectIdOrHexString(params.businessId)) redirect('../');
 
     const business = await Business
         .findById(params.businessId)
         .select('name')
         .lean() as Pick<BusinessObject, 'name' | '_id'> | null;
-    if (!business) redirect('/customer/newappointment');
+    if (!business) redirect('../');
 
     const employees = await Employee
         .find({ business: params.businessId })
@@ -30,7 +30,7 @@ export default async function BusinessAppointmentPage({ params }: Props) {
             <ul className={styles.employeeList}>
                 {employees.map(employee => 
                     <li key={employee._id.toString()}>
-                        <Card href={`../employee/${employee._id.toString()}`}>
+                        <Card href={`../employee/${employee._id}`}>
                             <Icon name='account_circle' className={styles.employeeIcon} />
                             <p className='no-margin'>{employee.name}</p>
                         </Card>

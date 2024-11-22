@@ -33,7 +33,7 @@ export default async function CustomerDashboard() {
                         employeeName={appointment.employee.name}
                         appointmentId={appointment._id.toString()}/>
                 )}
-                <Card addStyle href='/customer/newappointment'>
+                <Card addStyle href='book'>
                     <Icon name='add' className={styles.addIcon} />
                     <h3 className='no-margin text-center'>New Appointment</h3>
                 </Card>

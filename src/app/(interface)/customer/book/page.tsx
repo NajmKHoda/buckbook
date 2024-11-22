@@ -28,7 +28,7 @@ export default function NewAppointmentPage() {
                     :
                     <div className={styles.businessesContainer}>
                         {businesses.map(business => (
-                            <Card key={business.id} href={`./newappointment/business/${business.id}`}>
+                            <Card key={business.id} href={`./book/business/${business.id}`}>
                                 <Icon className={styles.businessIcon} name='apartment' />
                                 <p className={styles.businessLabel}>{business.name}</p>
                             </Card>

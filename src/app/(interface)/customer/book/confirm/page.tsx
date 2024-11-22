@@ -19,7 +19,7 @@ export default async function ConfirmAppointmentPage({ searchParams }: Props) {
     if (!isObjectIdOrHexString(employeeId)) notFound();
 
     const date = new Date(datetime);
-    if (isNaN(date.valueOf())) redirect(`../employee/${employeeId}`);
+    if (isNaN(date.valueOf())) redirect(`employee/${employeeId}`);
 
     const employee: any = await Employee
         .findById(employeeId)

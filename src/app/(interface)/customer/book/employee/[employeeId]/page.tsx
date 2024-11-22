@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default async function AppointmentEmployeePage({ params }: Props) {
-    if (!isObjectIdOrHexString(params.employeeId)) redirect('/customer/newappointment');
+    if (!isObjectIdOrHexString(params.employeeId)) redirect('../');
 
     const employee = await Employee
         .findById(params.employeeId)
@@ -21,7 +21,7 @@ export default async function AppointmentEmployeePage({ params }: Props) {
             Pick<EmployeeObject, 'business'>,
             'business',
             Pick<BusinessObject, 'hours' | 'appointmentDuration'>> | null;
-    if (!employee || !employee.business) redirect('/customer/newappointment');
+    if (!employee || !employee.business) redirect('../');
     const { hours, appointmentDuration } = employee.business;
 
     const times = (await Appointment
