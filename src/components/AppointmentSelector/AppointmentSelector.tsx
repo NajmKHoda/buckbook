@@ -32,14 +32,17 @@ function datetimeToString(date: CalendarDate, time: string) {
 interface Props {
     bookedTimes: string[],
     hours: Hours[],
-    appointmentDuration: number
+    appointmentDuration: number,
+    appointmentEditId?: string
 }
 
-export default function AppointmentSelector({ bookedTimes, hours, appointmentDuration }: Props) {
+export default function AppointmentSelector({ bookedTimes, hours, appointmentDuration, appointmentEditId }: Props) {
     const router = useRouter();
     const { employeeId } = useParams();
     const [selectedDate, setSelectedDate] = useState(CalendarDate.now());
     const [selectedTime, setSelectedTime] = useState<string>();
+
+    const query = appointmentEditId ? `&edit=${appointmentEditId}` : '';
 
     const unavailableDates = useMemo(() => {
         const appointmentCounts: Record<string, [weekDay: number, count: number]> = {}
@@ -101,7 +104,7 @@ export default function AppointmentSelector({ bookedTimes, hours, appointmentDur
         const minutes = Number(selectedTime!.slice(3, 5));
         const date = new Date(selectedDate.year, selectedDate.month, selectedDate.day, hours, minutes);
         
-        router.push(`../confirm/?employeeId=${employeeId}&datetime=${date.toISOString()}`);
+        router.push(`../confirm/?employeeId=${employeeId}&datetime=${date.toISOString()}${query}`);
     }
 
     return (

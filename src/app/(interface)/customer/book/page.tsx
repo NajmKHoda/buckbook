@@ -7,8 +7,16 @@ import SubmitButton from "@/components/input/SubmitButton/SubmitButton";
 import Icon from "@/components/Icon";
 import Card from '@/components/cards/Card';
 
-export default function NewAppointmentPage() {
+interface Props {
+    searchParams: {
+        edit?: string;
+    }
+}
+
+export default function NewAppointmentPage({ searchParams }: Props) {
     const [businesses, formAction] = useFormState(handleBusinessSearch, [])
+    
+    const query = searchParams.edit ? `?edit=${searchParams.edit}` : '';
 
     return (
         <section>
@@ -28,7 +36,7 @@ export default function NewAppointmentPage() {
                     :
                     <div className={styles.businessesContainer}>
                         {businesses.map(business => (
-                            <Card key={business.id} href={`./book/business/${business.id}`}>
+                            <Card key={business.id} href={`./book/business/${business.id}${query}`}>
                                 <Icon className={styles.businessIcon} name='apartment' />
                                 <p className={styles.businessLabel}>{business.name}</p>
                             </Card>

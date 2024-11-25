@@ -7,5 +7,5 @@ interface Props extends PropsWithChildren {
 }
 
 export default function LinkButton({ className, href, children }: Props) {
-    return <Link href={href} className={`button no-underline ${className}`}>{children}</Link>
+    return <Link href={href} className={`button ${className}`}>{children}</Link>
 }

@@ -7,10 +7,11 @@ import { isObjectIdOrHexString } from "mongoose"
 import { redirect } from "next/navigation"
 
 interface Props {
+    searchParams: { edit?: string }
     params: { employeeId: string }
 }
 
-export default async function AppointmentEmployeePage({ params }: Props) {
+export default async function AppointmentEmployeePage({ searchParams, params }: Props) {
     if (!isObjectIdOrHexString(params.employeeId)) redirect('../');
 
     const employee = await Employee
@@ -33,7 +34,11 @@ export default async function AppointmentEmployeePage({ params }: Props) {
     return (
         <>
             <h2 className='text-center'>Select an appointment date and time.</h2>
-            <AppointmentSelector hours={hours} appointmentDuration={appointmentDuration} bookedTimes={times} />
+            <AppointmentSelector
+                hours={hours}
+                appointmentDuration={appointmentDuration}
+                bookedTimes={times}
+                appointmentEditId={searchParams.edit} />
         </>
     )
 }

@@ -57,16 +57,18 @@ main {
 
 a {
     text-decoration: none;
-    color: hsl(from var(--theme__accent-color) h s calc(l + 5));
-    transition: color 75ms ease-out;
-
 }
 
-a:hover {
+a:not(.button) {
+    color: hsl(from var(--theme__accent-color) h s calc(l + 5));
+    transition: color 75ms ease-out;
+}
+
+a:not(.button):hover {
     color: hsl(from var(--theme__accent-color) h s calc(l + 15));
 }
 
-a:active {
+a:not(.button):active {
     color: hsl(from var(--theme__accent-color) h s calc(l - 5));
 }
 

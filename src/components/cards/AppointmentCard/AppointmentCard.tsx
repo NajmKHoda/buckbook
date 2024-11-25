@@ -6,6 +6,7 @@ import styles from './AppointmentCard.module.css'
 import { useRouter } from 'next/navigation';
 import Card from '../Card';
 import Dialog from '@/components/Dialog/Dialog'
+import LinkButton from '@/components/input/LinkButton/LinkButton';
 
 interface Props {
     appointmentId: string
@@ -58,7 +59,7 @@ export default function AppointmentCard({ appointmentId, businessName, employeeN
                     </tbody>
                 </table>
                 <div className={styles.dialogOptionContainer}>
-                    <button autoFocus>Edit</button>
+                    <LinkButton href={`book/confirm?edit=${appointmentId}`} >Edit</LinkButton>
                     <button onClick={handleDeleteButtonClick} className={styles.deleteButton}>Cancel</button>
                 </div>
             </Dialog>

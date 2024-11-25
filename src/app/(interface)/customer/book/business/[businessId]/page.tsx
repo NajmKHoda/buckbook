@@ -7,11 +7,14 @@ import Card from "@/components/cards/Card";
 import Icon from '@/components/Icon';
 
 interface Props {
-    params: { businessId: string }
+    searchParams: { edit?: string; }
+    params: { businessId: string; }
 }
 
-export default async function BusinessAppointmentPage({ params }: Props) {
+export default async function BusinessAppointmentPage({ searchParams, params }: Props) {
     if (!isObjectIdOrHexString(params.businessId)) redirect('../');
+
+    const query = searchParams.edit ? `?edit=${searchParams.edit}` : '';
 
     const business = await Business
         .findById(params.businessId)
@@ -30,7 +33,7 @@ export default async function BusinessAppointmentPage({ params }: Props) {
             <ul className={styles.employeeList}>
                 {employees.map(employee => 
                     <li key={employee._id.toString()}>
-                        <Card href={`../employee/${employee._id}`}>
+                        <Card href={`../employee/${employee._id}${query}`}>
                             <Icon name='account_circle' className={styles.employeeIcon} />
                             <p className='no-margin'>{employee.name}</p>
                         </Card>
