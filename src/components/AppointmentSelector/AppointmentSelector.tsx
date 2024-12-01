@@ -4,30 +4,8 @@ import { Hours } from "@/lib/database/models/business";
 import { useMemo, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Calendar from './Calendar/Calendar';
-import CalendarDate from "./CalendarDate";
 import styles from './AppointmentSelector.module.css';
-
-function timeToMinutes(timeString: string) {
-    const hours = Number(timeString.slice(0, 2));
-    const minutes = Number(timeString.slice(3, 5));
-    return hours * 60 + minutes;
-}
-
-function to12HourString(time: string) {
-    let hours = Number(time.slice(0, 2));
-    const suffix = hours < 12 ? 'AM' : 'PM';
-    hours %= 12;
-    if (hours === 0) hours = 12;
-    const minutes = time.slice(3, 5);
-    return `${hours}:${minutes} ${suffix}`;
-}
-
-function datetimeToString(date: CalendarDate, time: string) {
-    const hours = Number(time.slice(0, 2));
-    const minutes = Number(time.slice(3, 5));
-    const dateObj = new Date(date.year, date.month, date.day, hours, minutes);
-    return dateObj.toLocaleString('en-US', { dateStyle: 'long', timeStyle: 'short'});
-}
+import PartialDate from "./PartialDate";
 
 interface Props {
     bookedTimes: string[],
@@ -36,26 +14,30 @@ interface Props {
     appointmentEditId?: string
 }
 
+const dateFormatter = Intl.DateTimeFormat('en-US', { dateStyle: 'full', timeStyle: 'short' });
+const timeFormatter = Intl.DateTimeFormat('en-US', { timeStyle: 'short' });
+
 export default function AppointmentSelector({ bookedTimes, hours, appointmentDuration, appointmentEditId }: Props) {
     const router = useRouter();
     const { employeeId } = useParams();
-    const [selectedDate, setSelectedDate] = useState(CalendarDate.now());
-    const [selectedTime, setSelectedTime] = useState<string>();
-
+    const [selectedDate, setSelectedDate] = useState<PartialDate>();
     const query = appointmentEditId ? `&edit=${appointmentEditId}` : '';
 
     const unavailableDates = useMemo(() => {
+
+        // Count the number of appointments for each date that has appointments booked already.
         const appointmentCounts: Record<string, [weekDay: number, count: number]> = {}
         for (const time in bookedTimes) {
-            const calendarDate = new CalendarDate(Date.parse(time));
-            const dateString = calendarDate.toString();
+            const date = new PartialDate('day', time);
+            const dateString = date.toString();
             if (dateString in appointmentCounts) {
                 appointmentCounts[dateString][1] += 1;
             } else {
-                appointmentCounts[dateString] = [calendarDate.weekDay, 1];
+                appointmentCounts[dateString] = [date.weekday!, 1];
             }
         }
 
+        // Get an array of the maximum number of appointments on a given weekday.
         const maxAppointments = hours.map(day => {
             if (!day.isOpen) return 0;
             const opening = timeToMinutes(day.opening!);
@@ -63,80 +45,114 @@ export default function AppointmentSelector({ bookedTimes, hours, appointmentDur
             return Math.floor((closing - opening) / appointmentDuration);
         })
 
+        // If the number of appointments on a given date equals/exceeds the max for that weekday, that date is unavailable.
         const unavailable: string[] = []
-        for (const date in appointmentCounts) {
-            const [day, count] = appointmentCounts[date];
-            if (count >= maxAppointments[day]) unavailable.push(date);
+        for (const dateString in appointmentCounts) {
+            const [day, count] = appointmentCounts[dateString];
+            if (count >= maxAppointments[day]) unavailable.push(dateString);
         }
+
         return unavailable;
 
     }, [bookedTimes, hours, appointmentDuration]);
 
-    const closedDays = useMemo(
-        () => hours.map((day, i) => !day.isOpen ? i : -1).filter(x => x != -1),
-        [hours]
-    );
-    
+    // An array of weekdays for which this business is closed.
+    const closedDays = hours.map((day, i) => !day.isOpen ? i : -1).filter(x => x != -1);
+
     const availableTimes = useMemo(() => {
+        if (!selectedDate) return [];
+
+        // Get all of the booked times (in minutes) for the selected date.
         const dayBookedTimes = bookedTimes
-            .map(time => new Date(time))
-            .filter(date => selectedDate.equals(date))
-            .map(date => date.getHours() * 60 + date.getMinutes());
+            .map(time => new PartialDate('minutes', time))
+            .filter(time => PartialDate.areEqual(selectedDate, time))
+            .map(time => time.hours! * 60 + time.minutes!);
 
-        const dayHours = hours[selectedDate.weekDay];
+        // Get the hours (opening and closing) for the selected day.
+        const dayHours = hours[selectedDate.weekday!];
         if (!dayHours.isOpen) return [];
-
         const opening = timeToMinutes(dayHours.opening!);
         const closing = timeToMinutes(dayHours.closing!);
+
+        // Get information about today's date and time.
+        const today = new PartialDate('minutes');
+        const todayMinutes = today.hours! * 60 + today.minutes!;
+        const isToday = PartialDate.areEqual(selectedDate, today);
+        
         const times = [];
         for (let time = opening; time < closing; time += appointmentDuration) {
+            // If the time is already booked or before the current time, don't include it.
             if (dayBookedTimes.includes(time)) continue;
-            const hourString = Math.floor(time / 60).toString().padStart(2, '0');
-            const minuteString = (time % 60).toString().padStart(2, '0');
-            times.push(`${hourString}:${minuteString}`);
+            if (isToday && time <= todayMinutes) continue;
+
+            // Push the time to the times[] array;
+            const hours = Math.floor(time / 60);
+            const minutes = time % 60;
+            times.push(new PartialDate(
+                selectedDate.year,
+                selectedDate.month,
+                selectedDate.day,
+                hours,
+                minutes
+            ));
         }
 
         return times;
+
     }, [bookedTimes, hours, selectedDate, appointmentDuration])
 
     function handleSubmission() {
-        const hours = Number(selectedTime!.slice(0, 2));
-        const minutes = Number(selectedTime!.slice(3, 5));
-        const date = new Date(selectedDate.year, selectedDate.month, selectedDate.day, hours, minutes);
-        
-        router.push(`../confirm/?employeeId=${employeeId}&datetime=${date.toISOString()}${query}`);
+        if (!selectedDate) return;
+
+        const datestring = selectedDate.toISOString();    
+        router.push(`../confirm/?employeeId=${employeeId}&datetime=${datestring}${query}`);
     }
+
 
     return (
         <div className={styles.controlContainer}>
             <Calendar
                     selectedDate={selectedDate}
-                    onSelectionChanged={date => {
-                        setSelectedDate(date);
-                        setSelectedTime(undefined);
-                    }}
+                    onSelectionChanged={date => setSelectedDate(date)}
                     unavailableDates={unavailableDates}
                     closedDays={closedDays}/>
-            <div className={styles.timesListContainer}>
-                <h2 className='no-margin'>Available Times</h2>
-                <ul className={styles.timesList}>
-                    {availableTimes.map(time =>
-                        <li key={`${selectedDate.toString()} ${time}`}>
-                            <button
-                                className={selectedTime === time ? styles.selectedTime : styles.unselectedTime}
-                                onClick={() => setSelectedTime(time)}>
-                                {to12HourString(time)}
-                            </button>
-                        </li>)
-                    }
-                </ul>
-                <p className={styles.timeCaption}>
-                    {selectedTime ? 
-                        datetimeToString(selectedDate, selectedTime) :
-                        'Please select a time.'}
-                </p>
-                <button type='button' onClick={handleSubmission} disabled={!selectedTime}>Next</button>
-            </div>
+            { selectedDate &&
+                <div className={styles.timesListContainer}>
+                    <h2 className='no-margin'>Available Times</h2>
+                    <ul className={styles.timesList}>
+                        {availableTimes.map(time => 
+                            <li key={time.toString()}>
+                                <button
+                                    className={
+                                        selectedDate && PartialDate.areEqual(time, selectedDate, 'minutes') ?
+                                        styles.selectedTime :
+                                        styles.unselectedTime
+                                    }
+                                    onClick={() => setSelectedDate(time)}>
+                                    { timeFormatter.format(time.asDate()) }
+                                </button>
+                            </li>
+                        )}
+                    </ul>
+                    <p className={styles.timeCaption}>
+                        {selectedDate?.specificity === 'minutes' ? 
+                            dateFormatter.format(selectedDate.asDate()) :
+                            'Please select a time.'}
+                    </p>
+                    <button
+                        type='button'
+                        onClick={handleSubmission}
+                        disabled={selectedDate?.specificity !== 'minutes'}>
+                        Next
+                    </button>
+                </div>
+            }
         </div>
     )
+}
+
+function timeToMinutes(timeString: string) {
+    const hours = Number(timeString.slice(0, 2));
+    const minutes = Number(timeString.slice(3, 5));
+    return hours * 60 + minutes;
 }
