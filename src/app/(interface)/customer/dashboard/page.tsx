@@ -2,14 +2,12 @@ import styles from './page.module.css'
 import { Appointment } from '@/lib/database/models/appointment';
 import AppointmentCard from '@/components/cards/AppointmentCard/AppointmentCard'
 import { getAccount } from '@/lib/session';
-import { redirect } from 'next/navigation';
 import { AccountType } from '@/lib/database/models/user';
 import Card from "@/components/cards/Card";
 import Icon from "@/components/Icon";
 
 export default async function CustomerDashboard() {
     const customer = await getAccount(AccountType.Customer);
-    if (!customer) redirect('/login');
 
     const appointments: any = await Appointment
         .find({ customer: customer._id })

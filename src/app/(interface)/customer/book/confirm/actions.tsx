@@ -1,7 +1,7 @@
 'use server';
 
 import { isObjectIdOrHexString } from "mongoose";
-import { getSession } from "@/lib/session";
+import { getAccount } from "@/lib/session";
 import { Appointment } from "@/lib/database/models/appointment";
 import { Employee } from "@/lib/database/models/employee";
 import { AccountType } from "@/lib/database/models/user";
@@ -11,20 +11,17 @@ export async function handleSubmit(employeeId: string, datetime: string) {
     if (!isObjectIdOrHexString(employeeId) || isNaN(Date.parse(datetime))) return;
 
     const date = new Date(datetime);
-    const [session, employeeExists, appointmentExists] = await Promise.all([
-        getSession(),
+    const [customer, employeeExists, appointmentExists] = await Promise.all([
+        getAccount(AccountType.Customer),
         Employee.exists({ _id: employeeId }),
         Appointment.exists({ employee: employeeId, date })
     ]);
 
-    if (!session ||
-        session.accountType != AccountType.Customer ||
-        !employeeExists ||
-        appointmentExists) return;
+    if (!employeeExists || appointmentExists) return;
     
     await Appointment.create({
         employee: employeeId,
-        customer: session.accountId,
+        customer: customer._id,
         date
     });
 
@@ -36,12 +33,12 @@ export async function handleEdit(appointmentId: string, employeeId: string, date
         !isObjectIdOrHexString(employeeId) ||
         isNaN(Date.parse(datetime))) return;
 
-    const [session, employeeExists] = await Promise.all([
-        getSession(),
+    const [_, employeeExists] = await Promise.all([
+        getAccount(AccountType.Customer),
         Employee.exists({ _id: employeeId })
     ]);
 
-    if (!session || !employeeExists) return;
+    if (!employeeExists) return;
     
     const date = new Date(datetime);
     await Appointment.findByIdAndUpdate(appointmentId, {

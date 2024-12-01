@@ -1,4 +1,5 @@
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 import { JWTPayload, jwtVerify, SignJWT } from 'jose';
 import { ObjectIdType } from '@/lib/database/types';
 import getEnv from './environment';
@@ -54,9 +55,14 @@ export async function createSession(accountId: ObjectIdType, accountType: Accoun
  * Retrieves the current session.
  * @returns The session data, if found.
  */
-export async function getSession() {
+export function getSession(redirectIfFound?: true): Promise<SessionObject>;
+export function getSession(redirectIfFound: false | boolean): Promise<SessionObject | null>;
+export async function getSession(redirectIfFound = true) {
     const sessionToken = cookies().get('session')?.value;
-    if (!sessionToken) return null;
+    if (!sessionToken) {
+        if (redirectIfFound) redirect('/login');
+        return null;
+    }
 
     try {
         const { payload } = await jwtVerify<SessionPayload>(
@@ -68,9 +74,18 @@ export async function getSession() {
         const sessionId = payload.id;
         
         await connectToDatabase();
-        return await Session.findById(sessionId).lean() as SessionObject | null;
+        const session = await Session.findById(sessionId).lean() as SessionObject | null;
+
+        if (!session) {
+            if (redirectIfFound) redirect('/login');
+            return null;
+        }
+
+        return session;
     } catch {
         console.error('Session data retrieval failed.');
+
+        if (redirectIfFound) redirect('/login');
         return null;
     }
 }
@@ -84,26 +99,52 @@ type AccountObject<T extends AccountType | undefined> =
  * Retrieves the account associated with the current session, if any.
  * @returns A Business/Employee/Customer account, or null if the account isn't found.
  */
-export function getAccount(): Promise<BusinessObject | CustomerObject | EmployeeObject | null>
+export function getAccount(
+    accountType?: undefined,
+    redirectIfNone?: true
+): Promise<BusinessObject | CustomerObject | EmployeeObject>
+export function getAccount(
+    accountType: undefined,
+    redirectIfNone: false | boolean
+): Promise<BusinessObject | CustomerObject | EmployeeObject | null>
 
 /**
  * Retrieves the account of the specified type associated with the current session, if any.
  * @param accountType The expected account type.
  * @returns The account of the specified type, or null if the account isn't found.
  */
-export function getAccount<T extends AccountType>(accountType: T) : Promise<AccountObject<T> | null>
+export function getAccount<T extends AccountType>(accountType: T, redirectIfNone?: true) : Promise<AccountObject<T>>
+export function getAccount<T extends AccountType>(accountType: T, redirectIfNone: false) : Promise<AccountObject<T> | null>
 
-export async function getAccount<T extends AccountType>(accountType?: T) {
-    const session = await getSession();
-    if (!session) return null;
-    if (accountType && session.accountType != accountType) return null;
+export async function getAccount<T extends AccountType>(accountType?: T, redirectIfNone = true) {
+    const session = await getSession(redirectIfNone);
+    if (!session) {
+        if (redirectIfNone) redirect('/login');
+        return null;
+    }
 
+    if (accountType && session.accountType != accountType) {
+        if (redirectIfNone) redirect('/login');
+        return null;
+    }
+
+    let account: BusinessObject | EmployeeObject | CustomerObject | null;
     switch (session.accountType) {
         case AccountType.Business:
-            return await Business.findById(session.accountId).lean() as BusinessObject | null;
+            account = await Business.findById(session.accountId).lean() as BusinessObject | null;
+            break;
         case AccountType.Employee:
-            return await Employee.findById(session.accountId).lean() as EmployeeObject | null; 
+            account = await Employee.findById(session.accountId).lean() as EmployeeObject | null; 
+            break;
         case AccountType.Customer:
-            return await Customer.findById(session.accountId).lean() as CustomerObject | null;
+            account = await Customer.findById(session.accountId).lean() as CustomerObject | null;
+            break;
     }
+
+    if (!account) {
+        if (redirectIfNone) redirect('/login');
+        return null;
+    }
+
+    return account;
 }

@@ -3,7 +3,7 @@ import { getAccount } from '@/lib/session';
 import Link from 'next/link';
 
 export default async function Header() {
-    const name = (await getAccount())?.name ?? <Link href='/login'>Log In</Link>;
+    const name = (await getAccount(undefined, false))?.name ?? <Link href='/login'>Log In</Link>;
 
     return (
         <header className={styles.container}>

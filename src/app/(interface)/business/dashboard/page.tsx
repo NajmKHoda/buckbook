@@ -4,12 +4,10 @@ import EmployeeCard from '@/components/cards/EmployeeCard/EmployeeCard';
 import AddEmployeeCard from '@/components/cards/AddEmployeeCard/AddEmployeeCard';
 import styles from './page.module.css';
 import { getAccount } from '@/lib/session';
-import { redirect } from 'next/navigation';
 import { AccountType } from '@/lib/database/models/user';
 
 export default async function BusinessDashboard() {
     const business = await getAccount(AccountType.Business);
-    if (!business) redirect('/login');
     const employees = await Employee.find({ business: business._id }).lean() as EmployeeObject[];
 
     return (
