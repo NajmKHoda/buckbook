@@ -2,7 +2,7 @@
 
 import { useState, ReactNode } from 'react';
 import styles from './Calendar.module.css';
-import PartialDate from '../PartialDate';
+import PartialDate from '../../../lib/PartialDate';
 
 const weekDays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 const monthNames = [

@@ -1,0 +1,36 @@
+.day {
+    box-sizing: content-box;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    text-align: start;
+
+    padding: 10px;
+    height: 3em;
+    line-height: 1;
+    border-radius: 0px;
+}
+
+.outDay {
+    composes: day;
+    background-color: var(--theme__layer1-color);
+}
+
+.inDay {
+    composes: day;
+    --button-color: var(--theme__layer2-color);
+}
+
+.currentDay {
+    composes: day;
+    --button-color: var(--theme__accent-color);
+}
+
+.outText {
+    color: hsl(from var(--theme__primary-color) h s calc(l - 50));
+    margin: 0px;
+}
+
+.inText {
+    margin: 0px;
+}

@@ -1,0 +1,18 @@
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+
+    background-color: var(--theme__layer1-color);
+    border-bottom: 3px black solid;
+}
+
+.navButton {
+    padding: 0px 10px;
+    border-radius: 0px;
+}
+
+.label {
+    margin: 5px 0px;
+    font-size: 1.5em;
+}

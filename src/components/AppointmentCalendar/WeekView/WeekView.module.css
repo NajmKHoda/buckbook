@@ -1,0 +1,82 @@
+.container {
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.daysContainer {
+    display: flex;
+    gap: 2px;
+    margin: 0px 0px 2px 0px;
+}
+
+.scrollContainer {
+    height: 65vh;
+    overflow-y: scroll;
+}
+
+.viewContainer {
+    position: relative;
+    display: flex;
+    gap: 2px;
+    height: 5000px;
+
+    background-color: var(--theme__layer1-color);
+}
+
+.timesColumn {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    justify-content: space-between;
+
+    background-color: var(--theme__layer2-color);
+}
+
+.time {
+    margin: 5px 0px 0px 0px;
+    flex-basis: 0px;
+    text-align: center;
+}
+
+.timeColHeader {
+    flex-grow: 1;
+    background-color: var(--theme__layer2-color);
+}
+
+.column {
+    position: relative;
+    flex: 1 1 0;
+    background-color: var(--theme__layer2-color);
+}
+
+.dayNum {
+    flex: 1 1 0px;
+    text-align: center;
+    font-size: 1.25em;
+    margin: 0px;
+    padding: 5px 0px;
+    background-color: var(--theme__layer2-color);
+}
+
+.dayNumToday {
+    composes: dayNum;
+    background-color: var(--theme__accent-color);
+}
+
+
+
+.dividerContainer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    pointer-events: none;
+}
+
+.divider {
+    width: 100%;
+    height: 2px;
+    background-color: var(--theme__layer1-color);
+}

@@ -1,0 +1,22 @@
+.container {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.grid {
+    display: grid;
+    width: 100%;
+    gap: 2px;
+    grid-template-columns: repeat(7, 1fr);
+
+    background-color: var(--theme__layer1-color);
+}
+
+.weekday {
+    text-align: center;
+    font-size: 1.25em;
+    margin: 0px;
+    padding: 5px 0px;
+
+    background-color: var(--theme__layer2-color);
+}

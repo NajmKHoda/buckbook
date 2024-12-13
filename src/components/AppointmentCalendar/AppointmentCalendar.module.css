@@ -1,0 +1,16 @@
+.container {
+    min-width: 350px;
+    max-width: 850px;
+    flex-grow: 1;
+}
+
+.spanControls {
+    display: flex;
+    margin: 0px 0px 0px 10px;
+    gap: 5px;
+}
+
+.spanButton {
+    border-radius: 10px 10px 0px 0px;
+    --button-color: var(--theme__layer2-color);
+}

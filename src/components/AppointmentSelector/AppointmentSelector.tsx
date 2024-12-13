@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Calendar from './Calendar/Calendar';
 import styles from './AppointmentSelector.module.css';
-import PartialDate from "./PartialDate";
+import PartialDate from "../../lib/PartialDate";
 
 interface Props {
     bookedTimes: string[],
