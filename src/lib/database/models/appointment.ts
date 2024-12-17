@@ -10,7 +10,7 @@ interface IAppointment {
 const appointmentSchema = new Schema<IAppointment>({
     employee: { type: ObjectIdSchema, ref: 'Employee', required: true },
     customer: { type: ObjectIdSchema, ref: 'Customer', required: true },
-    date: { type: Date, required: true }
+    date: { type: Date, required: true, expires: 0 }
 });
 
 export type AppointmentDocument = HydratedDocument<IAppointment>;
