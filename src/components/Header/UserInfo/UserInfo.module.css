@@ -1,0 +1,37 @@
+.container {
+    position: relative;
+    flex: 0 1 0;
+}
+
+.userButton {
+    border-radius: 0px;
+    font-size: 2em;
+    padding: 15px 20px;
+    border-left: 5px solid var(--theme__layer1-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    --button-color: var(--theme__layer2-color);
+}
+
+.loginContainer {
+    composes: userButton;
+    color: var(--theme__accent-color);
+}
+
+.userIcon {
+    --optical-size: 48;
+    line-height: inherit;
+    margin: -0.1em;
+}
+
+.userMenuButton {
+    position: absolute;
+    top: 100%;
+    left: 0%;
+    width: 100%;
+
+    --button-color: var(--theme__layer2-color);
+    border-radius: 0px 0px 10px 10px;
+}

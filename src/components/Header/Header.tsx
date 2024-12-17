@@ -1,14 +1,14 @@
 import styles from './Header.module.css'
 import { getAccount } from '@/lib/session';
-import Link from 'next/link';
+import UserInfo from './UserInfo/UserInfo';
 
 export default async function Header() {
-    const name = (await getAccount(undefined, false))?.name ?? <Link href='/login'>Log In</Link>;
+    const name = (await getAccount(undefined, false))?.name;
 
     return (
         <header className={styles.container}>
-            <h1 className='no-margin'>BuckBook</h1>
-            <p className={styles.name}>{name}</p>
+            <h1 className={ styles.title }>BuckBook</h1>
+            <UserInfo name={ name } />
         </header>
     )
 }

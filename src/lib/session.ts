@@ -148,3 +148,10 @@ export async function getAccount<T extends AccountType>(accountType?: T, redirec
 
     return account;
 }
+
+export async function destroySession() {
+    const session = await getSession();
+    await Session.findByIdAndDelete(session._id);
+    await cookies().delete('session');
+    redirect('/login');
+}
