@@ -5,7 +5,7 @@ import { PropsWithChildren } from 'react';
 import { Wix_Madefor_Display } from 'next/font/google'
 
 export const metadata: Metadata = {
-    title: 'Barber Appointments'
+    title: 'BuckBook'
 }
 
 const wixMadeforDisplay = Wix_Madefor_Display({
